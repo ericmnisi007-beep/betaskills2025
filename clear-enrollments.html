@@ -1,0 +1,24 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Clear All Enrollments</title>
+</head>
+<body>
+    <h1>Clearing All Enrollments...</h1>
+    <p>This page will clear all enrollments from localStorage.</p>
+    
+    <script>
+        // Clear all enrollments immediately
+        localStorage.removeItem('enrollments');
+        console.log('✅ All enrollments cleared from localStorage!');
+        
+        // Show confirmation
+        document.body.innerHTML = `
+            <h1 style="color: green;">✅ All Enrollments Cleared!</h1>
+            <p>All enrollments have been removed from localStorage.</p>
+            <p>You can now close this tab and refresh your main application.</p>
+            <button onclick="window.close()">Close This Tab</button>
+        `;
+    </script>
+</body>
+</html>

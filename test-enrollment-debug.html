@@ -1,0 +1,96 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Enrollment Debug Test</title>
+    <style>
+        body { font-family: Arial, sans-serif; padding: 20px; }
+        button { padding: 10px 20px; margin: 10px; background: #007bff; color: white; border: none; border-radius: 5px; cursor: pointer; }
+        button:hover { background: #0056b3; }
+        .result { margin: 10px 0; padding: 10px; background: #f8f9fa; border-radius: 5px; }
+    </style>
+</head>
+<body>
+    <h1>Enrollment Debug Test</h1>
+    
+    <button onclick="createTestEnrollment()">Create Test Enrollment</button>
+    <button onclick="checkLocalStorage()">Check localStorage</button>
+    <button onclick="clearEnrollments()">Clear All Enrollments</button>
+    
+    <div id="result"></div>
+
+    <script>
+        function createTestEnrollment() {
+            const testEnrollment = {
+                id: `test_${Date.now()}`,
+                user_id: 'test-user-123',
+                user_email: 'test@example.com',
+                course_id: 'ai-human-relations',
+                course_title: 'AI and Human Relations',
+                status: 'pending',
+                enrolled_at: new Date().toISOString(),
+                progress: 0
+            };
+
+            // Save to localStorage
+            const existingEnrollments = JSON.parse(localStorage.getItem('enrollments') || '[]');
+            existingEnrollments.push(testEnrollment);
+            localStorage.setItem('enrollments', JSON.stringify(existingEnrollments));
+
+            // Dispatch events
+            window.dispatchEvent(new CustomEvent('enrollment-submitted', {
+                detail: { 
+                    courseId: testEnrollment.course_id, 
+                    userId: testEnrollment.user_id, 
+                    type: 'manual_approval', 
+                    status: 'pending',
+                    enrollmentData: testEnrollment
+                }
+            }));
+
+            window.dispatchEvent(new CustomEvent('refresh-instructor-dashboard', {
+                detail: { 
+                    newEnrollment: testEnrollment,
+                    type: 'manual_approval',
+                    timestamp: new Date().toISOString()
+                }
+            }));
+
+            showResult(`✅ Test enrollment created: ${testEnrollment.user_email} -> ${testEnrollment.course_title}`);
+        }
+
+        function checkLocalStorage() {
+            const enrollments = JSON.parse(localStorage.getItem('enrollments') || '[]');
+            showResult(`📊 localStorage has ${enrollments.length} enrollments:`, enrollments);
+        }
+
+        function clearEnrollments() {
+            localStorage.removeItem('enrollments');
+            showResult('🗑️ All enrollments cleared from localStorage');
+        }
+
+        function showResult(message, data = null) {
+            const resultDiv = document.getElementById('result');
+            resultDiv.innerHTML = `
+                <div class="result">
+                    <strong>${message}</strong>
+                    ${data ? `<pre>${JSON.stringify(data, null, 2)}</pre>` : ''}
+                </div>
+            `;
+        }
+
+        // Listen for enrollment events
+        window.addEventListener('enrollment-submitted', (event) => {
+            console.log('📡 enrollment-submitted event received:', event.detail);
+        });
+
+        window.addEventListener('refresh-instructor-dashboard', (event) => {
+            console.log('📡 refresh-instructor-dashboard event received:', event.detail);
+        });
+
+        // Initial check
+        checkLocalStorage();
+    </script>
+</body>
+</html>

@@ -1,0 +1,48 @@
+
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <!-- Reasonable Cache Control -->
+    <meta http-equiv="cache-control" content="public, max-age=3600" />
+    
+    <!-- Build timestamp for debugging -->
+    <meta name="build-timestamp" content="<%= new Date().toISOString() %>" />
+    <title>Beta Skill - Master New Skills Today</title>
+    <meta name="description" content="Join millions of learners worldwide and unlock your potential with comprehensive online courses. Learn at your own pace, anywhere, anytime." />
+    <meta name="author" content="Beta Skill" />
+
+    <meta property="og:title" content="Beta Skill - Master New Skills Today" />
+    <meta property="og:description" content="Join millions of learners worldwide and unlock your potential with comprehensive online courses. Learn at your own pace, anywhere, anytime." />
+    <meta property="og:type" content="website" />
+    <meta property="og:image" content="/og-image.png" />
+    <meta property="og:image:width" content="1200" />
+    <meta property="og:image:height" content="630" />
+
+    <meta name="twitter:card" content="summary_large_image" />
+    <meta name="twitter:site" content="@betaskill" />
+    <meta name="twitter:image" content="/og-image.png" />
+    
+    <!-- Beta Skill Application Logo as Favicon -->
+    <link rel="icon" href="/beta-skill-logo.png" type="image/png">
+    <link rel="apple-touch-icon" href="/beta-skill-logo.png">
+    
+    <!-- Preload critical fonts -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
+    
+    <!-- Preload critical assets -->
+    
+    <!-- Preconnect to domain dependencies -->
+    <link rel="preconnect" href="https://jpafcmixtchvtrkhltst.supabase.co">
+  </head>
+
+  <body>
+    <div id="root"></div>
+    <!-- IMPORTANT: DO NOT REMOVE THIS SCRIPT TAG OR THIS VERY COMMENT! -->
+    <script src="https://cdn.gpteng.co/gptengineer.js" type="module"></script>
+    <script type="module" src="src/main.tsx"></script>
+  </body>
+</html>
